@@ -1,4 +1,4 @@
-package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db;
+package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db;
 
 
 import android.content.Context;
@@ -10,10 +10,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.dao.BookDAO;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.dao.CategoryDAO;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.entity.Book;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.entity.Category;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.dao.BookDAO;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.dao.CategoryDAO;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Category;
 
 @Database(entities = {Category.class, Book.class},version = 1)
 public abstract class BooksDataBase extends RoomDatabase {

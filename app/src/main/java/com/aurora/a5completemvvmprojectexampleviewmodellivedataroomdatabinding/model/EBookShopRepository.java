@@ -1,15 +1,15 @@
-package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model;
+package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.BooksDataBase;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.dao.BookDAO;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.dao.CategoryDAO;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.entity.Book;
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.entity.Category;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.BooksDataBase;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.dao.BookDAO;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.dao.CategoryDAO;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Category;
 
 import java.util.List;
 
@@ -32,8 +32,8 @@ public class EBookShopRepository {
         return categoryDAO.getAll();
     }
 
-    public LiveData<List<Book>> getBooks(int id) {
-        return bookDAO.getByCategoryId(id);
+    public LiveData<List<Book>> getBooks(int categoryId) {
+        return bookDAO.getByCategoryId(categoryId);
     }
 
 

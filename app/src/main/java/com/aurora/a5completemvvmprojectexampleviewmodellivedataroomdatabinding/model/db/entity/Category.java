@@ -1,4 +1,4 @@
-package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.entity;
+package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;

@@ -1,4 +1,4 @@
-package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.dao;
+package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Model.db.entity.Category;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Category;
 
 import java.util.List;
 
