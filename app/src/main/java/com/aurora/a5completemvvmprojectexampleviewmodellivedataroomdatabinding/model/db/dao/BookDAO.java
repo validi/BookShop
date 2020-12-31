@@ -21,7 +21,7 @@ public interface BookDAO {
     void delete(Book book);
 
     @Update
-    long update(Book book);
+    void update(Book book);
 
     @Query("select * from books_table")
     LiveData<List<Book>> getAll();

@@ -1,12 +1,13 @@
 package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.BR;
 
 
 @Entity(tableName = "categories_table")
@@ -58,5 +59,11 @@ public class Category extends BaseObservable {
         this.id = id;
         this.categoryName = categoryName;
         this.categoryDescription = categoryDescription;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.categoryName;
     }
 }

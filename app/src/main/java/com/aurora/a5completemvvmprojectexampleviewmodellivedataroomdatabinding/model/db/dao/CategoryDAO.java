@@ -21,7 +21,7 @@ public interface CategoryDAO {
     void delete(Category category);
 
     @Update
-    long update(Category category);
+    void update(Category category);
 
     @Query("select * from categories_table")
     LiveData<List<Category>> getAll();
