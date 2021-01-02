@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Recycler.BooksAdapter;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.databinding.ActivityMainBinding;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Category;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     MainActivityClickHandler handler;
     private Category selectCategory;
     private ArrayList<Category> categoriesList;
+    private ArrayList<Book> booksList;
+    private RecyclerView booksRecyclerView;
+    private BooksAdapter booksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +59,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        main_ActivityViewModel.getBooksOfASelectionCategory(1).observe(this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-                for (Book b : books) {
-                    Log.i("MyTAG", b.getBookName());
-                }
-            }
-        });
-//
 
+
+
+    }
+
+    private void initRecycler() {
+        booksRecyclerView=activityMainBinding.recycler;
+        booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        booksRecyclerView.setHasFixedSize(true);
+        booksAdapter=new BooksAdapter();
+        booksRecyclerView.setAdapter(booksAdapter);
+        booksAdapter.setBooks(booksList);
 
     }
 
@@ -71,6 +79,18 @@ public class MainActivity extends AppCompatActivity {
         categoryArrayAdapter.setDropDownViewResource(R.layout.spiner_item);
         activityMainBinding.setSpinerAdapter(categoryArrayAdapter);
 
+    }
+    private void LoadBookArrayList(int idCategory){
+        main_ActivityViewModel.getBooksOfASelectionCategory(idCategory).observe(this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+            booksList=(ArrayList<Book>) books;
+                initRecycler();
+                for (Book b : books) {
+                    Log.i("MyTAG", b.getBookName());
+                }
+            }
+        });
     }
 
 
@@ -88,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             // Showing selected spinner item
             Toast.makeText(parent.getContext(), message, Toast.LENGTH_LONG).show();
 
+            LoadBookArrayList(selectCategory.getId());
 
         }
 
