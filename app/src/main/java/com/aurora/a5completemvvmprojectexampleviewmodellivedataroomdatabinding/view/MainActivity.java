@@ -1,4 +1,4 @@
-package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding;
+package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.view;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.R;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.Recycler.BooksAdapter;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.databinding.ActivityMainBinding;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;

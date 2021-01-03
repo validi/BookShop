@@ -13,7 +13,7 @@
 
         <variable
             name="mainclickHandler"
-            type="com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.MainActivity.MainActivityClickHandler" />
+            type="com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.view.MainActivity.MainActivityClickHandler" />
 
     </data>
 
@@ -21,7 +21,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".view.MainActivity">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"

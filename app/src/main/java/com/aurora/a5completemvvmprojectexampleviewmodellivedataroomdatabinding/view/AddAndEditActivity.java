@@ -1,15 +1,16 @@
-package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding;
+package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.R;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.databinding.ActivityAddAndEditBinding;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;
 
@@ -20,14 +21,15 @@ public class AddAndEditActivity extends AppCompatActivity {
     public static String BookID="Book_ID";
     public static String BookName="Book_Name";
     public static String UnitPrice="Unit_Price";
-    AddAndEditActivityClickHandler  addAndEditActivityClickHandler=new AddAndEditActivityClickHandler(this);
+    AddAndEditActivityClickHandler  addAndEditActivityClickHandler=
+            new AddAndEditActivityClickHandler(this);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_add_and_edit);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_add_and_edit);
+        binding= DataBindingUtil.setContentView(this, R.layout.activity_add_and_edit);
         book=new Book();
 
         binding.setClickHandler(addAndEditActivityClickHandler);
