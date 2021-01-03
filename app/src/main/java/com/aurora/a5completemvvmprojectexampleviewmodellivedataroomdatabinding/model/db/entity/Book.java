@@ -12,6 +12,8 @@ import androidx.room.PrimaryKey;
 
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.BR;
 
+import java.util.Objects;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "books_table"
@@ -72,5 +74,21 @@ public class Book extends BaseObservable {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
        notifyPropertyChanged(BR.categoryId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return bookId == book.bookId &&
+                categoryId == book.categoryId &&
+                bookName.equals(book.bookName) &&
+                unitPrice.equals(book.unitPrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookId, bookName, unitPrice, categoryId);
     }
 }

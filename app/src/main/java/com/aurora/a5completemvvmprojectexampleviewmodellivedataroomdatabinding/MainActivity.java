@@ -101,8 +101,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                    Book bookToDelete=booksList.get(viewHolder.getAdapterPosition());
-                    main_ActivityViewModel.deleteBook(bookToDelete);
+                  try {
+                      Book bookToDelete=booksList.get(viewHolder.getAdapterPosition());
+                      main_ActivityViewModel.deleteBook(bookToDelete);
+                      booksList.remove(bookToDelete);
+                  }catch (Exception e){
+                      Log.i("MYTAG",e.getMessage());
+                  }
+
             }
         }).attachToRecyclerView(booksRecyclerView);
 
@@ -120,14 +126,16 @@ public class MainActivity extends AppCompatActivity {
         main_ActivityViewModel.getBooksOfASelectionCategory(idCategory).observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-            booksList=(ArrayList<Book>) books;
 
-                for (Book b : booksList) {
-                    Log.i("MyTAG", b.getBookName());
-                }
+
 
                 if(idCategory==selectCategory.getId()) {
+                    booksList=(ArrayList<Book>) books;
                     initRecycler();
+                    for (Book b : booksList) {
+                        Log.i("MyTAG", b.getBookName());
+                    }
+
                 }
             }
         });
