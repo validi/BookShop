@@ -12,6 +12,9 @@ import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.m
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Category;
 
 import java.util.List;
+import java.util.concurrent.Exchanger;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class EBookShopRepository {
 
@@ -51,7 +54,15 @@ public class EBookShopRepository {
         new DeleteCategoryAsyncTask(categoryDAO).execute(category);
     }
     public void insertCategory(Category category) {
-        new InsertCategoryAsyncTask(categoryDAO).execute(category);
+       // new InsertCategoryAsyncTask(categoryDAO).execute(category);
+
+    Executors.newSingleThreadExecutor().execute(new Runnable() {
+        @Override
+        public void run() {
+            categoryDAO.insert(category);
+        }
+    });
+
     }
     public void updateCategory(Category category) {
         new UpdateCategoryAsyncTask(categoryDAO).execute(category);
@@ -59,26 +70,27 @@ public class EBookShopRepository {
 
 
 
-    public static class InsertCategoryAsyncTask extends AsyncTask<Category, Void, Void> {
-
-        private CategoryDAO categoryDAO;
-
-        public InsertCategoryAsyncTask(CategoryDAO categoryDAO) {
-            this.categoryDAO = categoryDAO;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-
-        @Override
-        protected Void doInBackground(Category... categories) {
-
-            categoryDAO.insert(categories[0]);
-            return null;
-        }
-    }
+//    public static class InsertCategoryAsyncTask extends AsyncTask<Category, Void, Void> {
+//
+//        private CategoryDAO categoryDAO;
+//
+//        public InsertCategoryAsyncTask(CategoryDAO categoryDAO) {
+//            this.categoryDAO = categoryDAO;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Category... categories) {
+//
+//            categoryDAO.insert(categories[0]);
+//            return null;
+//        }
+//    }
+//
 
     public static class DeleteCategoryAsyncTask extends AsyncTask<Category, Void, Void> {
 
@@ -162,6 +174,7 @@ public class EBookShopRepository {
             return null;
         }
     }
+
     public static class UpdateBookAsyncTask extends AsyncTask<Book, Void, Void> {
 
         private BookDAO bookDAO;
