@@ -1,12 +1,16 @@
 package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     MainActivityViewModel main_ActivityViewModel;
-    ActivityMainBinding activityMainBinding;
+    ActivityMainBinding binding;
     MainActivityClickHandler handler;
     private Category selectCategory;
     private ArrayList<Category> categoriesList;
@@ -35,15 +39,21 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView booksRecyclerView;
     private BooksAdapter booksAdapter;
 
+    private static int ADD_BOOK_REQUEST_CODE=1;
+    private static int EDIT_BOOK_REQUEST_CODE=2;
+    private int selectBookId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // setContentView(R.layout.activity_main);
 
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         handler = new MainActivityClickHandler();
-        activityMainBinding.setMainclickHandler(handler);
+        binding.setMainclickHandler(handler);
 
+        binding.toolbar.setTitle("List Book");
+        binding.toolbar.setTitleTextColor(0xffffffff);
 
         main_ActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -65,38 +75,96 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecycler() {
-        booksRecyclerView=activityMainBinding.recycler;
+        booksRecyclerView=binding.recycler;
         booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         booksRecyclerView.setHasFixedSize(true);
         booksAdapter=new BooksAdapter();
         booksRecyclerView.setAdapter(booksAdapter);
         booksAdapter.setBooks(booksList);
+        booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Book book) {
+                selectBookId=book.getBookId();
+                Intent intent=new Intent(getApplicationContext(),AddAndEditActivity.class);
+                intent.putExtra(AddAndEditActivity.BookID,book.getBookId());
+                intent.putExtra(AddAndEditActivity.BookName,book.getBookName());
+                intent.putExtra(AddAndEditActivity.UnitPrice,book.getUnitPrice());
+                startActivityForResult(intent,EDIT_BOOK_REQUEST_CODE);
+            }
+        });
+
+        new  ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    Book bookToDelete=booksList.get(viewHolder.getAdapterPosition());
+                    main_ActivityViewModel.deleteBook(bookToDelete);
+            }
+        }).attachToRecyclerView(booksRecyclerView);
 
     }
 
     private void showOnSpiner() {
         ArrayAdapter<Category> categoryArrayAdapter=new ArrayAdapter<Category>(this,R.layout.spiner_item,categoriesList);
         categoryArrayAdapter.setDropDownViewResource(R.layout.spiner_item);
-        activityMainBinding.setSpinerAdapter(categoryArrayAdapter);
+        binding.setSpinerAdapter(categoryArrayAdapter);
 
     }
+
     private void LoadBookArrayList(int idCategory){
+
         main_ActivityViewModel.getBooksOfASelectionCategory(idCategory).observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
             booksList=(ArrayList<Book>) books;
-                initRecycler();
-                for (Book b : books) {
+
+                for (Book b : booksList) {
                     Log.i("MyTAG", b.getBookName());
+                }
+
+                if(idCategory==selectCategory.getId()) {
+                    initRecycler();
                 }
             }
         });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            if(requestCode==ADD_BOOK_REQUEST_CODE){
+
+                Book book=new Book();
+                book.setBookName(data.getStringExtra(AddAndEditActivity.BookName));
+                book.setUnitPrice("$"+data.getStringExtra(AddAndEditActivity.UnitPrice));
+                book.setCategoryId(selectCategory.getId());
+                main_ActivityViewModel.addNewBook(book);
+                
+
+            }else if(requestCode==EDIT_BOOK_REQUEST_CODE){
+                Book book=new Book();
+                book.setBookName(data.getStringExtra(AddAndEditActivity.BookName));
+                book.setUnitPrice(data.getStringExtra(AddAndEditActivity.UnitPrice));
+                book.setCategoryId(selectCategory.getId());
+                book.setBookId(selectBookId);
+                main_ActivityViewModel.updateBook(book);
+            }
+
+        }
+    }
 
     public class MainActivityClickHandler {
         public void onFabClick(View view) {
-            Toast.makeText(view.getContext(), "onFabClicked", Toast.LENGTH_SHORT).show();
+
+            Intent intent=new Intent(getApplicationContext(),AddAndEditActivity.class);
+            startActivityForResult(intent,ADD_BOOK_REQUEST_CODE);
+
         }
 
         public void onSelectItem(AdapterView<?> parent, View view, int pos, long id) {
@@ -107,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Showing selected spinner item
             Toast.makeText(parent.getContext(), message, Toast.LENGTH_LONG).show();
+
 
             LoadBookArrayList(selectCategory.getId());
 

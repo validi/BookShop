@@ -41,7 +41,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         eBookShopRepository.deleteCategory(category);
     }
 
-    public void UpdateCategory(Category category) {
+    public void updateCategory(Category category) {
         eBookShopRepository.updateCategory(category);
     }
 
@@ -53,7 +53,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         eBookShopRepository.deleteBook(book);
     }
 
-    public void UpdateBook(Book book) {
+    public void updateBook(Book book) {
         eBookShopRepository.updateBook(book);
     }
 

@@ -3,12 +3,14 @@ package com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.library.baseAdapters.BR;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.BR;
 
 import static androidx.room.ForeignKey.CASCADE;
 

@@ -28,23 +28,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_baseline_add_24_whate"
             android:layout_marginBottom="20dp"
             android:clickable="true"
             android:onClick="@{mainclickHandler::onFabClick}"
+            android:tint="#8BC34A"
+            app:backgroundTint="#F6F2F2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinner"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/crdSpiner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             app:layout_constraintEnd_toEndOf="parent"
-            android:adapter="@{spinerAdapter}"
-            android:onItemSelected="@{mainclickHandler::onSelectItem}"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adapter="@{spinerAdapter}"
+                android:onItemSelected="@{mainclickHandler::onSelectItem}"
+                />
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
@@ -53,7 +63,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/crdSpiner" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
