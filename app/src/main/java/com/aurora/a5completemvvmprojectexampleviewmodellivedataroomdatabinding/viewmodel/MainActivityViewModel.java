@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.EBookShopRepository;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;
@@ -12,15 +13,15 @@ import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.m
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends ViewModel {
 
     private EBookShopRepository eBookShopRepository;
     private LiveData<List<Category>> allCategories;
     private LiveData<List<Book>> booksOfASelectionCategory;
 
-    public MainActivityViewModel(@NonNull Application application) {
-        super(application);
-        eBookShopRepository = new EBookShopRepository(application);
+    public MainActivityViewModel(EBookShopRepository eBookShopRepository1) {
+        //super(application);
+        this.eBookShopRepository = eBookShopRepository1;
     }
 
     public LiveData<List<Category>> getAllCategories() {

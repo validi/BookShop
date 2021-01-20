@@ -24,9 +24,13 @@ import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.d
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Book;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.model.db.entity.Category;
 import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.viewmodel.MainActivityViewModel;
+import com.aurora.a5completemvvmprojectexampleviewmodellivedataroomdatabinding.viewmodel.MainActivityViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private static int EDIT_BOOK_REQUEST_CODE=2;
     private int selectBookId;
 
+    @Inject
+    MainActivityViewModelFactory mainActivityViewModelFactory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         binding.toolbar.setTitle("List Book");
         binding.toolbar.setTitleTextColor(0xffffffff);
 
-        main_ActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        //main_ActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        main_ActivityViewModel = ViewModelProviders.of(this,mainActivityViewModelFactory).get(MainActivityViewModel.class);
 
         main_ActivityViewModel.getAllCategories().observe(this, new Observer<List<Category>>() {
             @Override
@@ -154,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 book.setUnitPrice("$"+data.getStringExtra(AddAndEditActivity.UnitPrice));
                 book.setCategoryId(selectCategory.getId());
                 main_ActivityViewModel.addNewBook(book);
-                
+
 
             }else if(requestCode==EDIT_BOOK_REQUEST_CODE){
                 Book book=new Book();
